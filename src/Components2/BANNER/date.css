@@ -1,0 +1,21 @@
+.date-selector {
+    display: flex;
+    align-items: center;
+    margin-top: 2px;
+  }
+  
+  .date-selector label {
+    margin-right: 10px;
+    font-weight: bold;
+  }
+  
+  .date-picker {
+    width: fit-content;
+    display: inline-block;
+    margin-right: 10px;
+    border-radius: 20px;
+    border: 1px solid #ccc;
+    padding: 4px;
+    font-size: 14px;
+  }
+  
