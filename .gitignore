@@ -11,6 +11,9 @@
 # production
 /build
 
+#custom Folders
+/src/components
+
 # misc
 .DS_Store
 .env.local
