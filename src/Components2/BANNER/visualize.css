@@ -1,0 +1,32 @@
+.visualise{
+    margin-right: 16px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    padding: 4px;
+    font-size: 14px;
+    align-items: center;
+    margin-bottom: 15px;
+  
+}
+.shpcnt{
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: rgb(255, 255, 255);
+    gap: 10px;
+}
+.shpdate{
+    display: flex;
+    margin-bottom: 10px;
+    border-radius: 15px;
+    align-items: center;
+    gap: 8px;
+}
+.shpden{
+    display: flex;
+    margin-bottom: 10px;
+    
+}
+.visualise input{
+    border-radius: 5px;
+}

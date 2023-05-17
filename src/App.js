@@ -1,16 +1,18 @@
-import React, {useState }from 'react'
+import React, {useState, useContext }from 'react'
 import NavBar from './Components2/NavBar.js'
 import './App.css'
 import Banner from './Components2/BANNER/Banner.js'
 import OpenLayersMap from './Components2/BANNER/Main.js'
 // import { useState } from 'react'
 import Draw from 'ol/interaction/Draw.js';
-
 import drawcontext from './Components2/context.js'
 
 function App() {
   const [mapObject,setMapObject]= useState(null);
   const [source,setVectorSource]= useState(null);
+  const [loading, setLoading] = useState(false);
+  // const {shipUrl} = useContext(drawcontext);
+
 
   function setaddInteraction(draw) {
     if (draw){
@@ -32,6 +34,7 @@ function App() {
   return (
     <drawcontext.Provider value={{mapObject,setMapObject, source, setVectorSource}}>
     <div className="App">
+    {loading && <div className="loading-overlay">Loading...</div>}
         <NavBar /> 
         <Banner drawToolControl={setaddInteraction}/>
         <OpenLayersMap />

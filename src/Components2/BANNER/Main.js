@@ -10,36 +10,36 @@ import Style from 'ol/style/Style';
 import CircleStyle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
-function OpenLayersMap(props){
+function OpenLayersMap({ imageUrl }){
+
+  console.log("imageUrl",imageUrl);
   const {mapObject,setMapObject} = useContext(drawcontext);
   const {source,setVectorSource} = useContext(drawcontext);
   const ref = useRef(null);
   const mapRef = useRef(null);
-  const vector = new VectorLayer({
-    source: source,
-    style:new Style({
-      image: new CircleStyle({
-        radius: 7,
-        fill: new Fill({color: 'black'}),
-        stroke: new Stroke({
-          color: [255,0,0],
-          width: 1
-        })
-      })
-    })
-  });
+
 
   useEffect(() => {
     if (ref.current && !mapRef.current) {
       const vecSource = new VectorSource({wrapX: false});
       setVectorSource(vecSource);
+      const vector = new VectorLayer({
+        source: vecSource,
+        style: new Style({
+          image: new CircleStyle({
+            radius: 7,
+            fill: new Fill({ color: "black" }),
+            stroke: new Stroke({
+              color: [255, 0, 0],
+              width: 1,
+            }),
+          }),
+        }),
+      });
+      // vectorRef.current = vector;
       mapRef.current = new Map({
         layers: [
-          new TileLayer({
-            source: new OSM(),
-          }), 
-          vector
-        ],
+          new TileLayer({source: new OSM()}), vector],
         target: ref.current,
         view: new View({
           center: [0, 0],
@@ -48,16 +48,17 @@ function OpenLayersMap(props){
       });
       setMapObject(mapRef.current);
     }
-  }, [ref, mapRef]);
+  }, [ref, mapRef, imageUrl]);
 
   useEffect(() => {
+    
     console.log(source);
-    console.log(vector);
+    // console.log(vector);
   },[source]);
 
   return (
     <div>
-        <div ref={ref} style={{ width: '100%', height: '800px', paddingTop: '7%' }}></div>
+        <div ref={ref} style={{ width: '100%', height: '800px', }}></div>
     </div>
   );
 }

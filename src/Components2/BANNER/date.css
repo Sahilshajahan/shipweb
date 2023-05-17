@@ -2,6 +2,7 @@
     display: flex;
     align-items: center;
     margin-top: 2px;
+    margin-bottom: 15px;
   }
   
   .date-selector label {
@@ -12,8 +13,8 @@
   .date-picker {
     width: fit-content;
     display: inline-block;
-    margin-right: 10px;
-    border-radius: 20px;
+    margin-right: 16px;
+    border-radius: 8px;
     border: 1px solid #ccc;
     padding: 4px;
     font-size: 14px;

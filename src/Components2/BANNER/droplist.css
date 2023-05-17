@@ -1,0 +1,31 @@
+.location-dropdown-container {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+  }
+  
+  label {
+    display: flex;
+    font-weight: bold;
+    margin-right: 10px;
+  }
+  
+  select {
+    padding: 10 px;
+    font-size: 14px;
+    border:none;
+    height: 35px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(217, 217, 217, 0.269);
+    cursor: pointer;
+  }
+  
+  select:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  select:focus {
+    outline: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(0, 123, 255, 0.5);
+  }
+  
