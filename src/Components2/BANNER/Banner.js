@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useEffect,useState, useContext } from 'react';
 import './Banner.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import DateSelector from './date';
@@ -25,11 +25,13 @@ function Banner(props) {
   
   const [selectedLocation, setSelectedLocation] = useState(null);
   const [loading,setloading] = useState(false);
-  const [shipCount, setShipCount] = useState(null);  
-  const [resultDate, setResultDate] = useState(null); 
+  
   const [showVisualize, setShowVisualize] = useState(false);
   const [resultLayer, setResultLayer] = useState(null);
-  const [density,setDenstity]=useState(null);
+  const [feature,setFeature]=useState(null);
+
+  const [chartData, setChartData] = useState({});
+
   
 
 const handleToggleDetails = () => {
@@ -60,7 +62,9 @@ const handleToggleDetails = () => {
 
   const clearLayer=()=>{
     if(resultLayer){
-      mapObject.removeLayer(resultLayer);
+      resultLayer.forEach(item => {
+        mapObject.removeLayer(item);
+      });
     }
     else{
       // console.log("noResultLayer");
@@ -99,7 +103,11 @@ const handleToggleDetails = () => {
     }
     console.log('query',queryJson)
 
-    let queryUrl= "http://127.0.0.1:3013/ship";
+    const dateArray = []
+    const countArray = []
+    const tileUrl = []
+    // let queryUrl= "http://127.0.0.1:3013/ship";
+    let queryUrl="http://127.0.0.1:3013/shipcll";
     fetch(queryUrl,{method: "POST",body:JSON.stringify(queryJson)})
     .then(resp => {
       console.log(resp);
@@ -107,39 +115,74 @@ const handleToggleDetails = () => {
       
     })
     .then(myJson => {
-      const ship_count = myJson.data.ship_count;
-      const result_date = myJson.data.Date;
-      const ship_url = myJson.data.ship_url;
-      const ship_density = myJson.data.Density;
-      // ship_count = "10";
-      setShipCount(ship_count);
-      setResultDate(result_date);
-      setDenstity(ship_density);
+      if(myJson.data.length){
+        myJson.data.forEach(item => {
+          dateArray.push(item.date);
+          countArray.push(item.count);
+          const resultTileLayer = new TileLayer({
+            source: new XYZ({
+              attributions:
+                'Tiles © <a href="https://earthengine.google.com/">Google Earth Engine</a>',
+              url: item.tileUrl,
+            }),
+            title:"shipLayer",
+            visible: false,
+          });
+          mapObject.addLayer(resultTileLayer);
+          tileUrl.push(resultTileLayer);
+        });
 
+
+        
+        setResultLayer(tileUrl);
+
+        console.log('resultlayer',resultLayer)
+
+        console.log(dateArray, countArray, tileUrl);
+      }
+      else{
+        console.log('No s1 tiles available');
+      }
+      //{ const ship_feature = 
+      // console.log("ship_url",ship_url)
+      // ship_count = "10";
+      // setShipCount(ship_count);
+      // setResultDate(result_date);
+      // setDenstity(ship_density);
+    
+      // const labels = dateArray;
+      // const data = countArray;}
+      setChartData({
+        labels:dateArray,
+        datasets: [
+          {
+            label:"ship count",
+            data: countArray,
+            fill:false,
+            borderColor:'rgba(75,192,192,1)',
+            font : {
+              size:18,
+              color:'red',
+            },
+            tension: 0.1,
+          },
+          
+        ],
+        backgroundColor: "rgba(255, 0, 0)",
+      });
+      
       setloading(false);
       setShowVisualize(true);
       setSmallNav('Visualize');
       clearLayer();
-      const resultTileLayer = new TileLayer({
-        source: new XYZ({
-          attributions:
-            'Tiles © <a href="https://earthengine.google.com/">Google Earth Engine</a>',
-          url:ship_url,
-        }),
-        title:"shipLayer"
-      });
-
-      mapObject.addLayer(resultTileLayer);
-      setResultLayer(resultTileLayer);
     })
     .catch(error => {
       setloading(false);
       console.error(error);
     });
 };
-/////////////////////////
 
-////////////////////////
+
   function  CallBackStartDate(startDate)
   {
     setStartDate(startDate);
@@ -210,7 +253,7 @@ const handleToggleDetails = () => {
           
         </div> 
         
-        :(showVisualize && smallNav==='Visualize')?<Visualize shipCount={shipCount} ResultDate = {resultDate} shipDensity={density}/>:null
+        :(showVisualize && smallNav==='Visualize')?<Visualize  lineChart={chartData} shipTileLayers={resultLayer} />:null
         }
          
         </div>

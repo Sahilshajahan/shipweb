@@ -1,11 +1,13 @@
 .visualise{
-    margin-right: 16px;
+    /* width:400px; */
+    /* margin-right: 16px; */
     border-radius: 8px;
     border: 1px solid #ccc;
-    padding: 4px;
+    padding: 10px;
     font-size: 14px;
     align-items: center;
-    margin-bottom: 15px;
+    margin: 10px;
+    /* margin-bottom: 15px; */
   
 }
 .shpcnt{
