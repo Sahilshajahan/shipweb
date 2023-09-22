@@ -1,21 +1,27 @@
-import React, {useState, useContext }from 'react'
-import NavBar from './Components2/NavBar.js'
-import './App.css'
-import Banner from './Components2/BANNER/Banner.js'
-import OpenLayersMap from './Components2/BANNER/Main.js'
-// import { useState } from 'react'
+import React, { useState, useContext } from 'react';
+import NavBar from './Components2/NavBar.js';
+import './App.css';
+import Banner from './Components2/BANNER/Banner.js';
+import OpenLayersMap from './Components2/BANNER/Main.js';
 import Draw from 'ol/interaction/Draw.js';
-import drawcontext from './Components2/context.js'
+import drawcontext from './Components2/context.js';
+import Sidebaar from './Components2/Sidebaar.js';
+import Banneroil from './Components2/BANNER/BannerOil.js';
+import BannerShoreLine from './Components2/BANNER/BannerShoreLine.js';
+import Mangrove from './Components2/BANNER/BannerMangrove.js';
 
 function App() {
-  const [mapObject,setMapObject]= useState(null);
-  const [source,setVectorSource]= useState(null);
+  const [mapObject, setMapObject] = useState(null);
+  const [source, setVectorSource] = useState(null);
   const [loading, setLoading] = useState(false);
-  // const {shipUrl} = useContext(drawcontext);
+  const [isShipDetectionClicked, setIsShipDetectionClicked] = useState(false); // Track whether the link is clicked
+  const [isOilSpillDetectionClicked, setIsOilSpillDetectionClicked] = useState(false); 
+  const [isShoreLineDetectionClicked, setIsShoreLineDetectionClicked] = useState(false);
+  const [isMangroveDtectionClicked, setIsMangroveDetectionClicked] = useState(false);
 
-
+  
   function setaddInteraction(draw) {
-    if (draw){
+    if (draw) {
       mapObject.removeInteraction(draw);
     }
     draw = new Draw({
@@ -31,15 +37,50 @@ function App() {
     mapObject.addInteraction(draw);
     return draw;
   }
+
+  // Function to handle the ship detection link click
+  const handleShipDetectionClick = () => {
+    setIsShipDetectionClicked(true);
+    setIsOilSpillDetectionClicked(false);
+  };
+
+  const handleOilSpillDetectionClick = () => {
+    setIsOilSpillDetectionClicked(true);
+    setIsShipDetectionClicked(false); 
+  };
+
+  const handleShoreLineDetectionClick = () => {
+    setIsOilSpillDetectionClicked(false);
+    setIsShipDetectionClicked(false); 
+    setIsOilSpillDetectionClicked(false)
+    setIsShoreLineDetectionClicked(true);
+  };
+
+  const handleMangroveDetectionClick = () => {
+    setIsShipDetectionClicked(false);
+    setIsOilSpillDetectionClicked(false);
+    setIsShoreLineDetectionClicked(false);
+    setIsMangroveDetectionClicked(true);
+  };
+
+
   return (
-    <drawcontext.Provider value={{mapObject,setMapObject, source, setVectorSource}}>
-    <div className="App">
-    {loading && <div className="loading-overlay">Loading...</div>}
-        <NavBar /> 
-        <Banner drawToolControl={setaddInteraction}/>
+    <drawcontext.Provider value={{ mapObject, setMapObject, source, setVectorSource }}>
+      <div className="App">
+        {loading && <div className="loading-overlay">Loading...</div>}
+        <NavBar />
+        <Sidebaar onShipDetectionClick={handleShipDetectionClick} 
+        onOilSpillDetectionClick={handleOilSpillDetectionClick}
+        onShoreLineDetectionClick={handleShoreLineDetectionClick}
+        onMangroveDetectionClick={handleMangroveDetectionClick}
+        />
+        {isShipDetectionClicked && <Banner drawToolControl={setaddInteraction} />}
+        {isOilSpillDetectionClicked && <Banneroil />}
+        {isShoreLineDetectionClicked && <BannerShoreLine />}
+        {isMangroveDtectionClicked && <Mangrove />}
         <OpenLayersMap />
-    </div>
+      </div>
     </drawcontext.Provider>
-  )
+  );
 }
-export default App
+export default App;

@@ -83,7 +83,7 @@ let chartOptions = {
           <input type='text' id='spdensity' value={`${(shipCount/(22/7*10*10)).toFixed(2)} per km` } readOnly/></div>
           <div className='shpdate'><label>Result Date :</label>
           <input type='text' id='rsltdate' value={resultDate} readOnly/></div>
-          <h1 className='description'>This is the result tab</h1>
+          <h1 className='description'><u>Interactive Image slider and line graph</u></h1>
 
           <ReactSlider
             className="horizontal-slider"

@@ -50,7 +50,7 @@ function MapComponent() {
 
   return (
     <div>
-      <div id="map" style={{ width: '100%', height: '800px', paddingTop: '7%' }}></div>
+      <div id="map" style={{ width: '80%', height: '800px', paddingTop: '7%' }}></div>
       <select id="type" onChange={handleChange}>
         <option value="None">None</option>
         <option value="Point">Point</option>

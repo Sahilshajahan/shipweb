@@ -3,9 +3,9 @@ import "./Navbar.css";
 function NavBar() {
   return (
     <div className='navbar'>
-      <img className="logo" src="https://media.giphy.com/media/BLG7sWHD0RHFK/giphy.gif" alt="" />
-      <h1 className='heading'><center><i>SHIP & OILSPILL DETETCTION</i></center></h1>
-      <img className="logo2" src="https://wallpaperaccess.com/full/1734337.jpg" alt="" />
+      <img className="logo" src={require("../../src/assets/geocoast_logo.png")} alt="" />
+      <h1 className='heading'><center>Geocoast</center></h1>
+      <img className="logo2" src={require("../../src/assets/GCRS_Logo.png")} alt="" />
     </div>
   )
 }

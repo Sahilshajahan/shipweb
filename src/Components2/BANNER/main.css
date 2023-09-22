@@ -1,4 +1,17 @@
-.mapContainer {
-    width: 80%;
-    height: 400px;
-  }
+.mainContainer {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+}
+
+
+.map-content{
+  height:100% ;
+  width:75%;
+  
+  
+}
+.sideBar{
+  width:25%;
+  height:100%
+}

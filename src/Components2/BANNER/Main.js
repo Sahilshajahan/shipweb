@@ -10,6 +10,7 @@ import Style from 'ol/style/Style';
 import CircleStyle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
+
 function OpenLayersMap({ imageUrl }){
 
   console.log("imageUrl",imageUrl);
@@ -57,8 +58,9 @@ function OpenLayersMap({ imageUrl }){
   },[source]);
 
   return (
-    <div>
-        <div ref={ref} style={{ width: '100%', height: '800px', }}></div>
+    <div className='mainContainer' >
+      <div className='sideBar'></div>
+      <div ref={ref} className='map-content'></div>
     </div>
   );
 }

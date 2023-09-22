@@ -1,0 +1,18 @@
+.side_icon {
+    position:fixed;
+    top:80px;
+    left:0;
+    width:5%;
+    height:100%;
+    display:flex;
+    align-items: center;
+    flex-direction:column;
+    background: #ccc;
+    backdrop-filter: blur(17px);
+    --webkit-backdrop-filter: blur(17px);
+    border-right: 1px solid rgba(15, 44, 46, 0.808);
+    transition: width 0.3s ease;
+    }
+    .side_icon:hover {
+    width:13%;
+    }
