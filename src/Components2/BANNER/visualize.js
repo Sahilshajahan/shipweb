@@ -96,8 +96,8 @@ let chartOptions = {
             onChange={setSliderValue}
             value = {sliderValue}
           />
-          <div>
-              <Line data={lineChart} backgroundColor="rgba(255,255,255,0.6)"
+          <div className='linechart'>
+              <Line data={lineChart}
             options={chartOptions}/>
            </div>
         

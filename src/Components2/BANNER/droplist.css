@@ -1,31 +1,50 @@
+/* CSS for the standardized location dropdown container */
 .location-dropdown-container {
-    display: flex;
-    align-items: center;
-    margin-top: 15px;
-  }
-  
-  label {
-    display: flex;
-    font-weight: bold;
-    margin-right: 10px;
-  }
-  
-  select {
-    padding: 10 px;
-    font-size: 14px;
-    border:none;
-    height: 35px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(217, 217, 217, 0.269);
-    cursor: pointer;
-  }
-  
-  select:hover {
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  select:focus {
-    outline: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(0, 123, 255, 0.5);
-  }
-  
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.label {
+  display: flex;
+  font-weight: bold;
+  margin-right: 10px;
+  font-size: 14px; /* Added font size */
+}
+
+.select-container {
+  position: relative; /* Added relative positioning for the select container */
+}
+
+select {
+  padding: 10px;
+  font-size: 14px;
+  border: none;
+  height: 35px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(217, 217, 217, 0.269);
+  cursor: pointer;
+  width: 150px; /* Added width for consistency */
+  -webkit-appearance: none; /* Remove default arrow in Safari */
+  -moz-appearance: none; /* Remove default arrow in Firefox */
+  appearance: none; /* Remove default arrow in other browsers */
+}
+
+select:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+select:focus {
+  outline: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 0 0 2px rgba(0, 123, 255, 0.5);
+}
+
+/* Style the custom arrow icon */
+.select-container::after {
+  content: '\25BC'; /* Down arrow character */
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  pointer-events: none;
+}

@@ -197,11 +197,16 @@ function BannerShoreLine(props) {
             />
             <LocationDropdown onLocationChange={handleLocationChange} onSelectedLocationChange={callBackLocation} />
 
+            
             <div className="lat-long-container">
-              <label>Latitude:</label>
-              <input type="number" step="0.01" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
-              <label>Longitude:</label>
-              <input type="number" step="0.01" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
+              <div className="input-row">
+                <label>Latitude:</label>
+                <input type="number" step="0.01" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
+              </div>
+              <div className="input-row">
+                <label>Longitude:</label>
+                <input type="number" step="0.01" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
+              </div>
             </div>
 
             <button className="latlong-btn" onClick={drawBtnHandler}>

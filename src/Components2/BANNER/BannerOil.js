@@ -96,7 +96,7 @@ function Banneroil(props) {
     const dateArray = [];
     const countArray = [];
     const tileUrl = [];
-    let queryUrl = 'http://127.0.0.1:3013/shipcll';
+    let queryUrl = 'http://127.0.0.1:3013/oilspill';
     fetch(queryUrl, { method: 'POST', body: JSON.stringify(queryJson) })
       .then((resp) => {
         console.log(resp);
@@ -128,23 +128,23 @@ function Banneroil(props) {
           console.log('No s1 tiles available');
         }
       
-        setChartData({
-          labels: dateArray,
-          datasets: [
-            {
-              label: 'ship count',
-              data: countArray,
-              fill: false,
-              borderColor: 'rgba(75,192,192,1)',
-              font: {
-                size: 18,
-                color: 'red',
-              },
-              tension: 0.1,
-            },
-          ],
-          backgroundColor: 'rgba(255, 0, 0)',
-        });
+        // setChartData({
+        //   labels: dateArray,
+        //   datasets: [
+        //     {
+        //       label: 'ship count',
+        //       data: countArray,
+        //       fill: false,
+        //       borderColor: 'rgba(75,192,192,1)',
+        //       font: {
+        //         size: 18,
+        //         color: 'red',
+        //       },
+        //       tension: 0.1,
+        //     },
+        //   ],
+        //   backgroundColor: 'rgba(255, 0, 0)',
+        // });
 
         setloading(false);
         setShowVisualize(true);
@@ -171,6 +171,7 @@ function Banneroil(props) {
   }
 
   return (
+    
     <div className="sidebar">
       <div className="content">
         <div className="BannerHeading">
@@ -197,11 +198,16 @@ function Banneroil(props) {
             />
             <LocationDropdown onLocationChange={handleLocationChange} onSelectedLocationChange={callBackLocation} />
 
+         
             <div className="lat-long-container">
-              <label>Latitude:</label>
-              <input type="number" step="0.01" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
-              <label>Longitude:</label>
-              <input type="number" step="0.01" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
+              <div className="input-row">
+                <label>Latitude:</label>
+                <input type="number" step="0.01" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
+              </div>
+              <div className="input-row">
+                <label>Longitude:</label>
+                <input type="number" step="0.01" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
+              </div>
             </div>
 
             <button className="latlong-btn" onClick={drawBtnHandler}>

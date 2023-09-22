@@ -1,81 +1,21 @@
-/* .sidebar{
-  width:200px;
-} */
+
 .sidebar{
-  width: 380px;
+  width: 303px;
   border-right:1px solid #e5e5e5;
-  position:absolute;
+  position:fixed;
   top:80px;
   bottom:0;
   height:100%;
-  left:77px;
-  /* width:60px; */
-  overflow:hidden;
-  /* -webkit-transition:width .05s linear;
-  transition:width .05s linear;
-  -webkit-transform:translateZ(0) scale(1,1); */
-  /* padding:10px 5px; */
+  left:49.9px;
+  /* overflow:hidden; */
   background:rgba(218, 218, 218);
-  box-shadow: 0 2px 4px rgba(0,0,0,.5);
-  z-index: 500;
-  /* transition: all 0.3s ease-in; */
-}
-.sidebar-hovered {
-  width: 303px; 
-  left:96/* Adjust this value to the desired width when hovered */
-}
-.side_icon {
-position:fixed;
-top:80px;
-left:0;
-width:5%;
-height:100%;
-display:flex;
-align-items: center;
-flex-direction:column;
-background: #ccc;
-backdrop-filter: blur(17px);
---webkit-backdrop-filter: blur(17px);
-border-right: 1px solid rgba(15, 44, 46, 0.808);
-transition: width 0.3s ease;
-}
-.side_icon:hover {
-width:13%;
-}
-.side_icon:hover {
-
-}
-.links li {
-align-items: center;
-}
-.links li:hover {
-border-radius: 4px;
-cursor:pointer;
-background:#e5e5e5;
-}
-.side_icon.earth-logo{
-display: flex;
-align-items:center;
-padding:25px 10px 15px;
+  /* box-shadow: 0 2px 4px rgba(0,0,0,.5); */
+  z-index:2;
+  transition: width 0.3s ease;
+  border-right: 1px solid rgba(15, 44, 46, 0.808);
 }
 
-.earth-logo img{
-width:43px;
-border-radius: 50%;
-}
-.earth-logo h2{
-font-weight: 600;
-font-size: 1.15rem;
-margin-left: 15px;
-display:none;
-}
-.side_icon:hover .earth-logo h2{
-display:block;
-}
 
-.links li span{
-padding: 12px 10px;
-}
 .side_banner.minimized {
 width: 50px;
 height: 50px;
@@ -92,12 +32,13 @@ margin-left: 0%;
 display: none;
 }
 .content{
+  font-weight: bold;
   text-align: center;
-  padding-top: 0px;
+  padding-top: 20px;
   height:fit-content;
   /* margin-top: 0; */
-  /* width: fit-content; */
-  margin: 0 20px 20px 20px;
+  width: 96%;
+  margin: 0 0px 0px 12px;
   color:rgb(0, 0, 0);
   /* display: flex; for displaying straigth */
 }
@@ -151,12 +92,12 @@ padding-top: 0%;
   background-color:black;
 }
 .description{
-  width:45rem;
+  width:17rem;
   line-height: 1.3;
   padding-top:1rem;
-  font-size: medium;
+  font-size:14px;
   height: 80px;
-  max-width: 360px;
+  /* max-width: 360px; */
 }
 
 .BannerTabs {
@@ -235,38 +176,42 @@ padding-top: 0%;
   height: 200px;
 }
 
-.input-container {
-  display: flex;
-  align-items: center;
-  margin-top: 10px;
-  margin-bottom: 15px;
-
-}
 .lat-long-container {
-  display:auto;
-  gap: 5px;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 20px;
 
 }
 .lat-long-container label {
-  font-size: 14px;
+  font-size: px;
   font-weight: bold;
   margin-right:1px;
+  
 }
 
 .lat-long-container input {
-  width: 126px;
-  height: 25px;
+  width: 150px;
+  height: 8px;
   margin-right: 0px;
   display: flex;
-  padding: 0 10px;
+  padding:  10px;
   border-radius: 8px;
   border: 1px solid #fafafa;
   font-size: 14px;
   font-family: Arial, sans-serif;
+
 }
 
+.lat-long-container .input-row {
+  display:flex;
+  align-items: center; /* Vertically align label and input */
+  gap: 10px; /* Adjust the gap between label and input as needed */
+  padding: 5px 1px;
+}
+
+.lat-long-container .input-row label {
+  font-size: 14px; /* Adjust font size as needed */
+  font-weight: bold;
+}
 .lat-long-container input:focus {
   outline: none;
   border-color: #3f51b5;

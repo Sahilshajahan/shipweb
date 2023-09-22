@@ -28,24 +28,12 @@ function Banner(props) {
   const [showVisualize, setShowVisualize] = useState(false);
   const [resultLayer, setResultLayer] = useState(null);
   const [feature, setFeature] = useState(null);
-
+  const [showDetails, setShowDetails] = useState(true);
   const [chartData, setChartData] = useState({});
-  
-  const [isHovered, setIsHovered] = useState(false);
 
-  const handleMouseHover = () => {
-    setIsHovered(!isHovered);
+  const handleToggleDetails = () => {
+    setShowDetails(!showDetails);
   };
-  useEffect(() => {
-    const sideIcon = document.querySelector('.side_icon');
-    sideIcon.addEventListener('mouseenter', handleMouseHover);
-    sideIcon.addEventListener('mouseleave', handleMouseHover);
-
-    return () => {
-      sideIcon.removeEventListener('mouseenter', handleMouseHover);
-      sideIcon.removeEventListener('mouseleave', handleMouseHover);
-    };
-  }, []);
 
   const drawBtnHandler = () => {
     const drawValue = props.drawToolControl();
@@ -187,74 +175,83 @@ function Banner(props) {
   }
 
   return (
-    <div className={`sidebar ${isHovered ? 'sidebar-hovered' : ''}`}>
-      <div className="sidebar">
-        <div className="content">
-          <div className="BannerHeading">
-            <h4>
-              <center>ship detection</center>
-            </h4>
-          </div>
-          <div className="BannerTabs">
-            <ul>
-              <li className="disc_tab active" onClick={() => handleSmallNav('Discover')}>
-                Discover
-              </li>
-              <li onClick={() => handleSmallNav('Visualize')}>Visualize </li>
-            </ul>
-          </div>
+    <div className="sidebar">
+      {/* <div className={`side_banner ${showDetails ? 'minimized' : ''}`}>
+        <button className="BannerToggleButton" onClick={handleToggleDetails}>
+          {showDetails ? <i className="fas fa-bars"></i> : <i className="fas fa-times"></i>}
+        </button>
+        {!showDetails && ( */}
+      <div className="content">
+        <div className="BannerHeading">
+          <h4>
+            <center>Ship Detection</center>
+          </h4>
+        </div>
+        <div className="BannerTabs">
+          <ul>
+            <li className="disc_tab active" onClick={() => handleSmallNav('Discover')}>
+              Discover
+            </li>
+            <li onClick={() => handleSmallNav('Visualize')}>Visualize </li>
+          </ul>
+        </div>
 
-          {smallNav === 'Discover' ? (
-            <div className="discover">
-              <DateSelector
-                handleCallBackStart={CallBackStartDate}
-                startDate={startDate}
-                endDate={endDate}
-                handlCallBackEnd={CallBackEndDate}
-              />
-              <LocationDropdown onLocationChange={handleLocationChange} onSelectedLocationChange={callBackLocation} />
+        {smallNav === 'Discover' ? (
+          <div className="discover">
+            <DateSelector
+              handleCallBackStart={CallBackStartDate}
+              startDate={startDate}
+              endDate={endDate}
+              handlCallBackEnd={CallBackEndDate}
+            />
+            <LocationDropdown onLocationChange={handleLocationChange} onSelectedLocationChange={callBackLocation} />
 
-              <div className="lat-long-container">
+            <div className="lat-long-container">
+              <div className="input-row">
                 <label>Latitude:</label>
                 <input type="number" step="0.01" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
+              </div>
+              <div className="input-row">
                 <label>Longitude:</label>
                 <input type="number" step="0.01" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
               </div>
-
-              <button className="latlong-btn" onClick={drawBtnHandler}>
-                Select Coordinates
-              </button>
-              <button className="undo">Undo</button>
-              <button className="reset">Reset</button>
-
-              {coordinates && (
-                <div>
-                  <p>Latitude: {coordinates.lat.toFixed(2)}</p>
-                  <p>Longitude: {coordinates.lon.toFixed(2)}</p>
-                </div>
-              )}
-
-              {loading ? (
-                <div>
-                  <img
-                    className="loding"
-                    src="https://cdn.dribbble.com/users/121337/screenshots/1024835/loading2.gif"
-                    alt=""
-                  />
-                </div>
-              ) : null}
-
-              <div>
-                <button className="run" onClick={() => handleRunCLick({ startDate: startDate, endDate: endDate, selectedLocation: selectedLocation })}>
-                  RUN
-                </button>
-              </div>
             </div>
-          ) : showVisualize && smallNav === 'Visualize' ? (
-            <Visualize lineChart={chartData} shipTileLayers={resultLayer} />
-          ) : null}
-        </div>
+
+            <button className="latlong-btn" onClick={drawBtnHandler}>
+              Select Coordinates
+            </button>
+            <button className="undo">Undo</button>
+            <button className="reset">Reset</button>
+
+            {coordinates && (
+              <div>
+                <p>Latitude: {coordinates.lat.toFixed(2)}</p>
+                <p>Longitude: {coordinates.lon.toFixed(2)}</p>
+              </div>
+            )}
+
+            {loading ? (
+              <div>
+                <img
+                  className="loding"
+                  src="https://cdn.dribbble.com/users/121337/screenshots/1024835/loading2.gif"
+                  alt=""
+                />
+              </div>
+            ) : null}
+
+            <div>
+              <button className="run" onClick={() => handleRunCLick({ startDate: startDate, endDate: endDate, selectedLocation: selectedLocation })}>
+                RUN
+              </button>
+            </div>
+          </div>
+        ) : showVisualize && smallNav === 'Visualize' ? (
+          <Visualize lineChart={chartData} shipTileLayers={resultLayer} />
+        ) : null}
       </div>
+      {/* )}
+      </div> */}
     </div>
   );
 }

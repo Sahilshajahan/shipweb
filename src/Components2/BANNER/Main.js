@@ -11,9 +11,9 @@ import CircleStyle from 'ol/style/Circle';
 import Fill from 'ol/style/Fill';
 import Stroke from 'ol/style/Stroke';
 
-function OpenLayersMap({ imageUrl }){
+function OpenLayersMap({ imageUrl,style }){
 
-  console.log("imageUrl",imageUrl);
+  console.log("imageUrl",style);
   const {mapObject,setMapObject} = useContext(drawcontext);
   const {source,setVectorSource} = useContext(drawcontext);
   const ref = useRef(null);
@@ -58,9 +58,10 @@ function OpenLayersMap({ imageUrl }){
   },[source]);
 
   return (
+  
     <div className='mainContainer' >
       <div className='sideBar'></div>
-      <div ref={ref} className='map-content'></div>
+      <div ref={ref} className='map-content' style={style}></div>
     </div>
   );
 }
