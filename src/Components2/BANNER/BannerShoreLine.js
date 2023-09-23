@@ -8,9 +8,10 @@ import LocationDropdown from './droplist';
 import drawcontext from '../context';
 import { fromLonLat } from 'ol/proj.js';
 import Visualize from './visualize';
-import { getDateString } from './run';
+// import { getDateString } from './run';
 import TileLayer from 'ol/layer/Tile';
 import XYZ from 'ol/source/XYZ.js';
+
 
 function BannerShoreLine(props) {
   const [coordinates, setCoordinates] = useState(null);
@@ -64,12 +65,12 @@ function BannerShoreLine(props) {
   function handleRunCLick(props) {
     setloading(true);
 
-    console.log(`Start Date: ${getDateString(props.startDate, 'YYYY-mm-dd')}, End Date: ${getDateString(props.endDate, 'YYYY-mm-dd')}`);
-    console.log('Selected coordinates:', selectedLocation);
-    const fstartDate = getDateString(props.startDate, 'YYYY-mm-dd');
-    const fendDate = getDateString(props.endDate, 'YYYY-mm-dd');
-    const locationCoordinate = selectedLocation;
-    console.log(fstartDate);
+    // console.log(`Start Date: ${getDateString(props.startDate, 'YYYY-mm-dd')}, End Date: ${getDateString(props.endDate, 'YYYY-mm-dd')}`);
+    // console.log('Selected coordinates:', selectedLocation);
+    // const fstartDate = getDateString(props.startDate, 'YYYY-mm-dd');
+    // const fendDate = getDateString(props.endDate, 'YYYY-mm-dd');
+    // const locationCoordinate = selectedLocation;
+    // console.log(fstartDate);
     let queryJson = {
       data: {
         aoi: {
@@ -78,73 +79,75 @@ function BannerShoreLine(props) {
             {
               type: 'Feature',
               geometry: {
-                type: 'Point',
-                coordinates: locationCoordinate,
+                type: 'Polygon',
+                coordinates: [
+                            [
+                                [
+                                    106.80219696052866,
+                                    10.39796631362065
+                                ],
+                                [
+                                    106.756878555931,
+                                    10.410122671299996
+                                ],
+                                [
+                                    106.73078613912003,
+                                    10.284484218223586
+                                ],
+                                [
+                                    106.79121068193291,
+                                    10.251377568065578
+                                ],
+                                [
+                                    106.80219696052866,
+                                    10.39796631362065
+                                ]
+                            ]
+                        ],
               },
               properties: { name: 'user_aoi' },
             },
           ],
         },
-        dates: {
-          from_date: fstartDate,
-          to_date: fendDate,
-        },
       },
     };
     console.log('query', queryJson);
 
-    const dateArray = [];
-    const countArray = [];
-    const tileUrl = [];
-    let queryUrl = 'http://127.0.0.1:3013/shipcll';
+    // const dateArray = [];
+    // const countArray = [];
+    const layerData = [];
+    let queryUrl = 'http://127.0.0.1:3013/shoreline';
     fetch(queryUrl, { method: 'POST', body: JSON.stringify(queryJson) })
       .then((resp) => {
         console.log(resp);
         return resp.json();
+        
       })
       .then((myJson) => {
+        console.log(myJson)
         if (myJson.data.length) {
           myJson.data.forEach((item) => {
-            dateArray.push(item.date);
-            countArray.push(item.count);
+            // dateArray.push(item.date);
+            // countArray.push(item.count);
             const resultTileLayer = new TileLayer({
               source: new XYZ({
                 attributions: 'Tiles © <a href="https://earthengine.google.com/">Google Earth Engine</a>',
                 url: item.tileUrl,
               }),
-              title: 'shipLayer',
-              visible: false,
+              title: 'shoreline - '+item.year,
+              visible: true,
             });
             mapObject.addLayer(resultTileLayer);
-            tileUrl.push(resultTileLayer);
+            layerData.push({shorelineTile:resultTileLayer, title:"Shore Line - "+item.year, color:item.color});
+           
           });
 
-          setResultLayer(tileUrl);
-
-          console.log('resultlayer', resultLayer);
-
-          console.log(dateArray, countArray, tileUrl);
+          // console.log('resultlayer', resultLayer);
+          console.log('layerData',layerData)
+          // console.log(dateArray, countArray, tileUrl);
         } else {
-          console.log('No s1 tiles available');
+          console.log('No tiles available');
         }
-      
-        setChartData({
-          labels: dateArray,
-          datasets: [
-            {
-              label: 'ship count',
-              data: countArray,
-              fill: false,
-              borderColor: 'rgba(75,192,192,1)',
-              font: {
-                size: 18,
-                color: 'red',
-              },
-              tension: 0.1,
-            },
-          ],
-          backgroundColor: 'rgba(255, 0, 0)',
-        });
 
         setloading(false);
         setShowVisualize(true);
@@ -157,14 +160,14 @@ function BannerShoreLine(props) {
       });
   }
 
-  function CallBackStartDate(startDate) {
-    setStartDate(startDate);
-    console.log('startDate', startDate);
-  }
-  function CallBackEndDate(endDate) {
-    setEndDate(endDate);
-    console.log('endDate', endDate);
-  }
+  // function CallBackStartDate(startDate) {
+  //   setStartDate(startDate);
+  //   console.log('startDate', startDate);
+  // }
+  // function CallBackEndDate(endDate) {
+  //   setEndDate(endDate);
+  //   console.log('endDate', endDate);
+  // }
 
   function callBackLocation(center) {
     setSelectedLocation(center);
@@ -189,22 +192,22 @@ function BannerShoreLine(props) {
 
         {smallNav === 'Discover' ? (
           <div className="discover">
-            <DateSelector
+            {/* <DateSelector
               handleCallBackStart={CallBackStartDate}
               startDate={startDate}
               endDate={endDate}
               handlCallBackEnd={CallBackEndDate}
-            />
+            /> */}
             <LocationDropdown onLocationChange={handleLocationChange} onSelectedLocationChange={callBackLocation} />
 
             
             <div className="lat-long-container">
               <div className="input-row">
-                <label>Latitude:</label>
+                <label>Start Year:</label>
                 <input type="number" step="0.01" value={latitude} onChange={(e) => setLatitude(e.target.value)} />
               </div>
               <div className="input-row">
-                <label>Longitude:</label>
+                <label>End Year:</label>
                 <input type="number" step="0.01" value={longitude} onChange={(e) => setLongitude(e.target.value)} />
               </div>
             </div>
@@ -233,13 +236,15 @@ function BannerShoreLine(props) {
             ) : null}
 
             <div>
-              <button className="run" onClick={() => handleRunCLick({ startDate: startDate, endDate: endDate, selectedLocation: selectedLocation })}>
+              <button className="run" onClick={handleRunCLick}>
                 RUN
               </button>
             </div>
           </div>
         ) : showVisualize && smallNav === 'Visualize' ? (
-          <Visualize lineChart={chartData} shipTileLayers={resultLayer} />
+          <> 
+          </>
+          // <Visualize shipTileLayers={resultLayer} />
         ) : null}
       </div>
     </div>

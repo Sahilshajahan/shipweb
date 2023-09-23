@@ -217,11 +217,11 @@ function Banner(props) {
               </div>
             </div>
 
-            <button className="latlong-btn" onClick={drawBtnHandler}>
+            {/* <button className="latlong-btn" onClick={drawBtnHandler}>
               Select Coordinates
             </button>
             <button className="undo">Undo</button>
-            <button className="reset">Reset</button>
+            <button className="reset">Reset</button> */}
 
             {coordinates && (
               <div>
